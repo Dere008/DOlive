@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>FlowMeet — Video Random Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Video random chat anonima con filtri gratuiti per età, genere e nazionalità. Nessuna registrazione.">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <noscript>
+    <div style="color:white; text-align:center; padding:20px; background:#111;">
+      Questo sito richiede JavaScript per funzionare correttamente.
+    </div>
+  </noscript>
+
+  <!-- OVERLAY DATI & FILTRI -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-card animate-pop">
+      <div class="logo">FlowMeet</div>
+      <h1>Incontra nuove persone in video, subito.</h1>
+      <p class="subtitle">
+        Nessuna registrazione. Entra in videochat anonima con filtri gratuiti per età, genere e nazionalità.
+      </p>
+
+      <div class="intro-grid">
+        <div class="intro-block">
+          <h2>I tuoi dati</h2>
+
+          <label for="myAge">Età</label>
+          <input type="number" id="myAge" min="13" max="99" placeholder="Es. 17" />
+
+          <label for="myGender">Genere</label>
+          <select id="myGender">
+            <option value="">Seleziona</option>
+            <option value="male">Maschio</option>
+            <option value="female">Femmina</option>
+            <option value="other">Altro</option>
+          </select>
+
+          <label for="myCountry">Nazionalità</label>
+          <input type="text" id="myCountry" placeholder="Es. Italia" />
+        </div>
+
+        <div class="intro-block">
+          <h2>Chi vuoi incontrare</h2>
+
+          <label for="filterGender">Genere preferito</label>
+          <select id="filterGender">
+            <option value="">Tutti</option>
+            <option value="male">Maschio</option>
+            <option value="female">Femmina</option>
+            <option value="other">Altro</option>
+          </select>
+
+          <label for="filterAgeMin">Età minima</label>
+          <input type="number" id="filterAgeMin" min="13" max="99" placeholder="Es. 16" />
+
+          <label for="filterAgeMax">Età massima</label>
+          <input type="number" id="filterAgeMax" min="13" max="99" placeholder="Es. 25" />
+
+          <label for="filterCountry">Nazionalità (opzionale)</label>
+          <input type="text" id="filterCountry" placeholder="Tutte o una specifica" />
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <p>
+          Non condividere dati personali. Vietati contenuti illegali, espliciti o rivolti a minori.
+          FlowMeet è pensato per conversazioni rispettose.
+        </p>
+      </div>
+
+      <button id="startBtn" class="primary-btn">Entra in videochat</button>
+      <div id="introError" class="error-msg"></div>
+    </div>
+  </div>
+
+  <!-- APP PRINCIPALE -->
+  <div class="app" id="app" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo small">FlowMeet</div>
+
+      <div class="user-card">
+        <h2>Tu</h2>
+        <p id="userSummary"></p>
+      </div>
+
+      <div class="filters-card">
+        <h2>Filtri attivi</h2>
+        <p id="filtersSummary"></p>
+        <button id="editFiltersBtn" class="ghost-btn">Modifica filtri</button>
+      </div>
+
+      <div class="tips">
+        <h3>Sicurezza</h3>
+        <ul>
+          <li>Non mostrare contenuti inappropriati.</li>
+          <li>Non condividere contatti personali.</li>
+          <li>Usa “Segnala” per comportamenti scorretti.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- AREA VIDEO + CHAT -->
+    <main class="chat-area">
+      <div class="chat-header">
+        <div>
+          <div class="chat-label">Video random chat</div>
+          <div id="status" class="status-badge status-waiting">
+            Connessione in corso...
+          </div>
+        </div>
+        <div class="chat-actions">
+          <button id="toggleCamBtn" class="icon-btn" title="Attiva/Disattiva videocamera">🎥</button>
+          <button id="toggleMicBtn" class="icon-btn" title="Attiva/Disattiva microfono">🎙️</button>
+          <button id="reportBtn" class="icon-btn" title="Segnala utente">⚠️</button>
+          <button id="nextBtn" class="secondary-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- SEZIONE VIDEO -->
+      <div class="video-wrapper">
+        <div class="video-card remote">
+          <video id="remoteVideo" autoplay playsinline></video>
+          <div class="video-label">Sconosciuto</div>
+        </div>
+
+        <div class="video-card local">
+          <video id="localVideo" autoplay muted playsinline></video>
+          <div class="video-label">Tu</div>
+        </div>
+      </div>
+
+      <div id="chatInfo" class="chat-info">
+        Stiamo cercando qualcuno che rispetti i tuoi filtri per avviare la videochat...
+      </div>
+
+      <!-- CHAT TESTUALE -->
+      <div id="messages" class="messages"></div>
+
+      <form id="messageForm" class="message-form">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Scrivi un messaggio..."
+          autocomplete="off"
+        />
+        <button type="submit" class="primary-btn small">Invia</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
